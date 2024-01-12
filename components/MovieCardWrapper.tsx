@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import {
   Menubar,
   MenubarContent,
@@ -13,8 +12,13 @@ import {
 import { ChevronDown } from "lucide-react";
 import { CardData } from "@/typings/typings";
 import { getTrending } from "@/services/home.apis";
-import { useRouter } from "next/navigation";
 import MovieCard from "./Movie-Card";
+
+interface MovieCardWrapperProps {
+  initialData: CardData;
+  filterBy: boolean;
+  title: string;
+}
 
 let trendingPage = 1;
 
@@ -76,8 +80,11 @@ const FilterMenu = ({
   );
 };
 
-const MovieCardWrapper = ({ initialData }: { initialData: CardData }) => {
-  const router = useRouter();
+const MovieCardWrapper = ({
+  initialData,
+  filterBy,
+  title,
+}: MovieCardWrapperProps) => {
   const [data, setData] = useState<CardData>(initialData);
 
   return (
@@ -85,20 +92,12 @@ const MovieCardWrapper = ({ initialData }: { initialData: CardData }) => {
       {data ? (
         <>
           <div className="flex justify-between items-center space-x-4">
-            <h2 className="font-bold text-2xl">Trending</h2>
+            <h2 className="font-bold text-2xl">{title}</h2>
             <div className="flex items-center space-x-3">
-              <FilterMenu setData={setData} />
-              <Button
-                variant="outline"
-                onClick={() => {
-                  router.push("/trending");
-                }}
-              >
-                View All
-              </Button>
+              {filterBy && <FilterMenu setData={setData} />}
             </div>
           </div>
-          <MovieCard data={data} />
+          <MovieCard data={data} title={title.toLowerCase()} />
         </>
       ) : null}
     </>

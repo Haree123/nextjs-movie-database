@@ -1,30 +1,40 @@
-"use client";
-import { CardData } from "@/typings/typings";
 import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { CardData } from "@/typings/typings";
+
 type MovieCardProps = {
   data: CardData;
+  title: string;
 };
 
-const MovieCard = ({ data }: MovieCardProps) => {
+const MovieCard = ({ data, title }: MovieCardProps) => {
   const router = useRouter();
 
+  console.log(title);
+
   return (
-    <div className="mt-10">
-      <div className="flex space-x-3 w-full overflow-x-scroll scrollbar-hide">
+    <div className="mt-10" style={{ overflow: "visible" }}>
+      <div className="flex space-x-2 overflow-x-scroll scrollbar-hide">
         {data.results.map((item) => {
+          const percentage = (parseInt(item.vote_average) / 10) * 100;
+          const vote_percentage = Math.round(percentage);
+          const borderStyle = `2px solid rgba(0, 128, 0, ${
+            vote_percentage / 100
+          })`;
+
           return (
             <div
-              className="cursor-pointer"
+              className="cursor-pointer relative overflow-visible"
               key={item.id}
               onClick={() => {
-                router.push(`/trending/${item.id}`);
+                router.push(`/${title}/${item.id}`);
               }}
             >
               <Image
-                className="rounded-md"
+                style={{ borderRadius: "0.375rem" }}
+                className="w-full"
                 src={`${process.env.NEXT_PUBLIC_TMDB_IMG_URL}${item.poster_path}`}
                 alt={item.title}
                 height={50}

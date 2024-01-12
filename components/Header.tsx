@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeToggler } from "./ThemeToggle";
+import HeaderNavigationMenu from "./Header-Menu";
 
 const Header = () => {
   return (
@@ -11,12 +11,12 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex items-center space-x-4 ml-5 text-[#6A6A6C] dark:text-white text-sm">
-          <Link href="/movies">Movies</Link>
+        <div className="flex items-center space-x-4 ml-5 text-sm">
+          {/* <Link href="/movies">Movies</Link>
           <Link href="/people">People</Link>
-          <Link href="/tv-shows">Tv Shows</Link>
+          <Link href="/tv-shows">Tv Shows</Link> */}
 
-          <ThemeToggler />
+          <HeaderNavigationMenu />
         </div>
       </div>
     </header>

@@ -1,15 +1,17 @@
 import Image from "next/image";
-import Oppenheimer from "../public/assets/Oppenheimer.jpg";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { getTrending } from "@/services/home.apis";
-import MovieCard from "@/components/Movie-Card";
-import MovieCardWrapper from "@/components/MovieCardWrapper";
 
-let trendingPage = 1;
+import { getTrending, getUpcoming } from "@/services/home.apis";
+import MovieCardWrapper from "@/components/MovieCardWrapper";
+import Oppenheimer from "../public/assets/Oppenheimer.jpg";
+
+let page = 1;
 
 const Home = async () => {
-  const trendingData = await getTrending(trendingPage, "day");
+  const trendingData = await getTrending(page, "day");
+  const upcomingMovie = await getUpcoming(page, "movie");
+  // const upcomingTvShows = await getUpcoming(page, "tv");
 
   return (
     <main>
@@ -32,8 +34,28 @@ const Home = async () => {
       </div>
 
       <div className="m-10">
-        <MovieCardWrapper initialData={trendingData} />
+        <MovieCardWrapper
+          initialData={trendingData}
+          title={"Trending"}
+          filterBy={true}
+        />
       </div>
+
+      <div className="m-10">
+        <MovieCardWrapper
+          initialData={upcomingMovie}
+          title={"Upcoming Movie"}
+          filterBy={false}
+        />
+      </div>
+
+      {/* <div className="m-10">
+        <MovieCardWrapper
+          initialData={upcomingTvShows}
+          title={"Upcoming Tv Shows"}
+          filterBy={false}
+        />
+      </div> */}
     </main>
   );
 };
