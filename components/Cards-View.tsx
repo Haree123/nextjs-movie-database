@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { CardData } from "@/typings/typings";
 import { PaginationCards } from "./Pagination";
+import { useRouter } from "next/navigation";
 
 interface CardsViewProps {
   currentPage: number;
@@ -12,6 +13,8 @@ interface CardsViewProps {
 }
 
 const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
+  const router = useRouter();
+
   return (
     <>
       {data.page === 0 ? (
@@ -33,7 +36,15 @@ const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
           <div className="grid grid-cols-4 lg:grid-cols-5 gap-10 mb-10">
             {data.results.map((item) => {
               return (
-                <div key={item.id}>
+                <div
+                  className="cursor-pointer"
+                  key={item.id}
+                  onClick={() => {
+                    router.push(
+                      `${type.includes("movies") ? `/movies/${item.id}` : ""}`
+                    );
+                  }}
+                >
                   <Image
                     placeholder="blur"
                     blurDataURL={

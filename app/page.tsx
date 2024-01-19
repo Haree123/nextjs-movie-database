@@ -48,14 +48,6 @@ const Home = async () => {
           filterBy={false}
         />
       </div>
-
-      {/* <div className="m-10">
-        <MovieCardWrapper
-          initialData={upcomingTvShows}
-          title={"Upcoming Tv Shows"}
-          filterBy={false}
-        />
-      </div> */}
     </main>
   );
 };

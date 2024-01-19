@@ -12,24 +12,22 @@ type MovieCardProps = {
 const MovieCard = ({ data, title }: MovieCardProps) => {
   const router = useRouter();
 
-  console.log(title);
-
   return (
     <div className="mt-10" style={{ overflow: "visible" }}>
       <div className="flex space-x-2 overflow-x-scroll scrollbar-hide">
         {data.results.map((item) => {
-          const percentage = (parseInt(item.vote_average) / 10) * 100;
-          const vote_percentage = Math.round(percentage);
-          const borderStyle = `2px solid rgba(0, 128, 0, ${
-            vote_percentage / 100
-          })`;
+          // const percentage = (parseInt(item.vote_average) / 10) * 100;
+          // const vote_percentage = Math.round(percentage);
+          const type = item.media_type === "movie" ? "movies" : "tv";
 
           return (
             <div
               className="cursor-pointer relative overflow-visible"
               key={item.id}
               onClick={() => {
-                router.push(`/${title}/${item.id}`);
+                router.push(
+                  `/${title !== "upcoming movie" ? type : "movies"}/${item.id}`
+                );
               }}
             >
               <Image
