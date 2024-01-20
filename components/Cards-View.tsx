@@ -41,7 +41,11 @@ const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
                   key={item.id}
                   onClick={() => {
                     router.push(
-                      `${type.includes("movies") ? `/movies/${item.id}` : ""}`
+                      `${
+                        type.includes("movies")
+                          ? `/movies/${item.id}`
+                          : `/tv/${item.id}`
+                      }`
                     );
                   }}
                 >

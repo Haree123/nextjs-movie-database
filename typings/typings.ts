@@ -17,6 +17,7 @@ export interface CardData {
 export interface MovieCast {
   adult: boolean;
   cast_id: string;
+  character: string;
   credit_id: string;
   gender: number;
   id: number;
@@ -49,12 +50,21 @@ export interface MovieGenres {
   name: string;
 }
 
-export interface MovieCredits {
+interface MovieVideo {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
+interface MovieData {
   backdrop_path: string;
-  credits: {
-    cast: MovieCast[];
-    crew: MovieCrew[];
-  };
   genres: MovieGenres[];
   poster_path: string;
   original_title: string;
@@ -64,4 +74,17 @@ export interface MovieCredits {
   tagline: string;
   title: string;
   vote_average: number;
+}
+
+export interface MovieCredits extends MovieData {
+  credits: {
+    cast: MovieCast[];
+    crew: MovieCrew[];
+  };
+}
+
+export interface MovieVideos extends MovieData {
+  videos: {
+    results: MovieVideo[];
+  };
 }

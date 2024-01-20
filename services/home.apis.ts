@@ -74,3 +74,15 @@ export const getInfoByIdVideos = async (type: MediaType, id: string) => {
   );
   return data.json();
 };
+
+export const getSimilarByMovieId = async (type: MediaType, id: string) => {
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    page: String(1),
+  });
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/${type}/${id}/similar?${queryParams}`
+  );
+  return data.json();
+};
