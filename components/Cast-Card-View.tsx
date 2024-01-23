@@ -2,14 +2,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { MovieCredits } from "@/typings/typings";
+import { MovieCredits, TvCredits } from "@/typings/typings";
 
-interface CastCardsViewProps {
-  data: MovieCredits;
+type TypeBasedData<T extends string> = T extends "movies"
+  ? MovieCredits
+  : T extends "tv"
+  ? TvCredits
+  : never;
+
+interface CastCardsViewProps<T extends string> {
+  data: TypeBasedData<T>;
   movieId: string;
+  type: T;
 }
 
-const CastCardsView = ({ data, movieId }: CastCardsViewProps) => {
+const CastCardsView = ({
+  data,
+  movieId,
+  type,
+}: CastCardsViewProps<"movies" | "tv">) => {
   return (
     <>
       <h2 className="font-bold text-xl mb-5">Top Billed Cast</h2>
@@ -48,7 +59,7 @@ const CastCardsView = ({ data, movieId }: CastCardsViewProps) => {
         })}
 
         <div className="flex space-x-2 items-center p-10">
-          <Link href={`/movies/${movieId}/cast`}>
+          <Link href={`/${type}/${movieId}/cast`}>
             <p
               className="cursor-pointer text-sm hover:text-gray-600"
               style={{ whiteSpace: "nowrap" }}

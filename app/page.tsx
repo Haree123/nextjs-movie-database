@@ -12,7 +12,6 @@ let page = 1;
 const Home = async () => {
   const trendingData: CardData = await getTrending(page, "day");
   const upcomingMovie: CardData = await getUpcoming(page, "movie");
-  console.log(upcomingMovie);
 
   return (
     <main>

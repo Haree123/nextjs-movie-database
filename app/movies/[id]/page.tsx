@@ -224,7 +224,7 @@ const MoviesById = async ({
 
       {dataCredits.credits.cast.length > 0 && (
         <div className="m-4 md:m-10">
-          <CastCardsView data={dataCredits} movieId={params.id} />
+          <CastCardsView data={dataCredits} movieId={params.id} type="movies" />
         </div>
       )}
 
@@ -272,11 +272,7 @@ const MoviesById = async ({
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Similar Movies</h2>
 
-          <MovieCard
-            data={similarMovies}
-            type="movie"
-            urlType="movie/similar"
-          />
+          <MovieCard data={similarMovies} type="movie" />
         </div>
       )}
     </>

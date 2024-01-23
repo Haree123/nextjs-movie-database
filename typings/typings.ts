@@ -17,6 +17,15 @@ export interface CardData {
   total_pages: number;
 }
 
+export interface CommonMediaData {
+  backdrop_path: string;
+  genres: MovieGenres[];
+  poster_path: string;
+  overview: string;
+  tagline: string;
+  vote_average: number;
+}
+
 export interface MovieCast {
   adult: boolean;
   cast_id: string;
@@ -53,7 +62,7 @@ export interface MovieGenres {
   name: string;
 }
 
-interface MovieVideo {
+interface MediaVideo {
   iso_639_1: string;
   iso_3166_1: string;
   name: string;
@@ -81,17 +90,11 @@ export interface MovieReviewResult {
   url: string;
 }
 
-interface MovieData {
-  backdrop_path: string;
-  genres: MovieGenres[];
-  poster_path: string;
+interface MovieData extends CommonMediaData {
   original_title: string;
-  overview: string;
   release_date: string;
   runtime: number;
-  tagline: string;
   title: string;
-  vote_average: number;
 }
 
 export interface MovieCredits extends MovieData {
@@ -103,7 +106,7 @@ export interface MovieCredits extends MovieData {
 
 export interface MovieVideos extends MovieData {
   videos: {
-    results: MovieVideo[];
+    results: MediaVideo[];
   };
 }
 
@@ -115,11 +118,85 @@ export interface MovieReviews {
   total_results: number;
 }
 
+interface TvCastData {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface TvCrewData {
+  adult: boolean;
+  credit_id: string;
+  department: string;
+  gender: number;
+  id: number;
+  job: string;
+  jobs: string[];
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+}
+
+export interface TvSeason {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+}
+
+export interface TvData extends CommonMediaData {
+  adult: boolean;
+  credits: {
+    cast: TvCastData[];
+    crew: TvCrewData[];
+  };
+  first_air_date: string;
+  last_air_date: string;
+  homepage: string;
+  id: string;
+  name: string;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_language: string;
+  original_name: string;
+  popularity: number;
+  seasons: TvSeason[];
+  status: string;
+  type: string;
+}
+
+export interface TvCredits extends TvData {
+  credits: {
+    cast: MovieCast[];
+    crew: MovieCrew[];
+  };
+}
+
+export interface TvVideos extends TvData {
+  videos: {
+    results: MediaVideo[];
+  };
+}
+
 interface PeopleKnownForResults {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
-  id: 206647;
+  id: number;
   media_type: string;
   original_language: string;
   original_name: string;
