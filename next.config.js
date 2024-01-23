@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "banner2.cleanpng.com",
       },
+      {
+        protocol: "https",
+        hostname: "media.themoviedb.org"
+      }
     ],
   },
 };

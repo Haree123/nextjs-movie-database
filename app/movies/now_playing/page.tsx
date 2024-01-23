@@ -49,7 +49,8 @@ const NowPlayingMovies = () => {
       <CardsView
         data={nowPlayingData}
         currentPage={page ? parseInt(page) : 1}
-        type="movies/now_playing"
+        type="movies"
+        urlType="movies/now_playing"
       />
     </div>
   );
