@@ -49,7 +49,8 @@ const PopularMovies = () => {
       <CardsView
         data={popularData}
         currentPage={page ? parseInt(page) : 1}
-        type="movies/popular"
+        type="movies"
+        urlType="movies/popular"
       />
     </div>
   );

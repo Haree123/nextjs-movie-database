@@ -75,7 +75,7 @@ export const getInfoByIdVideos = async (type: MediaType, id: string) => {
   return data.json();
 };
 
-export const getSimilarByMovieId = async (type: MediaType, id: string) => {
+export const getSimilarById = async (type: MediaType, id: string) => {
   const queryParams = new URLSearchParams({
     api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
     page: String(1),
@@ -83,6 +83,46 @@ export const getSimilarByMovieId = async (type: MediaType, id: string) => {
 
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/${type}/${id}/similar?${queryParams}`
+  );
+  return data.json();
+};
+
+export const getReviewsById = async (
+  type: MediaType,
+  id: string,
+  page: number
+) => {
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    page: String(page),
+  });
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/${type}/${id}/reviews?${queryParams}`
+  );
+  return data.json();
+};
+
+export const getPopularPeople = async (page: number) => {
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    page: String(page),
+  });
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/person/popular?${queryParams}`
+  );
+  return data.json();
+};
+
+export const getPeopleInfoById = async (id: string) => {
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    append_to_response: "combined_credits",
+  });
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/person/${id}?${queryParams}`
   );
   return data.json();
 };

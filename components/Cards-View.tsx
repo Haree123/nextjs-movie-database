@@ -2,18 +2,37 @@ import dayjs from "dayjs";
 import Image from "next/image";
 
 import { Skeleton } from "./ui/skeleton";
-import { CardData } from "@/typings/typings";
+import {
+  CardData,
+  CardResults,
+  PeopleData,
+  PeopleResults,
+} from "@/typings/typings";
 import { PaginationCards } from "./Pagination";
 import { useRouter } from "next/navigation";
 
-interface CardsViewProps {
+type TypeBasedData<T extends string> = T extends "movies"
+  ? CardData
+  : T extends "tv"
+  ? CardData
+  : PeopleData;
+
+interface CardsViewProps<T extends string> {
   currentPage: number;
-  data: CardData;
-  type: string;
+  data: TypeBasedData<T>;
+  type: T;
+  urlType: string;
 }
 
-const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
+const CardsView = ({
+  currentPage,
+  data,
+  type,
+  urlType,
+}: CardsViewProps<"movies" | "people" | "tv">) => {
   const router = useRouter();
+
+  const isTypePeople = type.includes("people");
 
   return (
     <>
@@ -35,6 +54,9 @@ const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
         <>
           <div className="grid grid-cols-4 lg:grid-cols-5 gap-10 mb-10">
             {data.results.map((item) => {
+              const movieTvItems = item as CardResults;
+              const personItem = item as PeopleResults;
+
               return (
                 <div
                   className="cursor-pointer"
@@ -42,7 +64,9 @@ const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
                   onClick={() => {
                     router.push(
                       `${
-                        type.includes("movies")
+                        isTypePeople
+                          ? `/people/${item.id}`
+                          : type.includes("movies")
                           ? `/movies/${item.id}`
                           : `/tv/${item.id}`
                       }`
@@ -56,26 +80,54 @@ const CardsView = ({ currentPage, data, type }: CardsViewProps) => {
                     }
                     style={{ borderRadius: "0.5rem" }}
                     className="object-contain h-84 w-full"
-                    src={`${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${item.poster_path}`}
-                    alt={item.name || item.title}
+                    src={`${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${
+                      type === "people"
+                        ? personItem.profile_path
+                        : movieTvItems.poster_path
+                    }`}
+                    alt={item.name || movieTvItems.title || "-"}
                     height={100}
                     quality={100}
                     width={150}
                   />
 
                   <p className="break-words font-bold mt-3 max-w-40 text-sm">
-                    {item.title || item.name}
+                    {type === "people"
+                      ? personItem.name || "-"
+                      : movieTvItems.title || movieTvItems.name || "-"}
                   </p>
 
-                  <p className="mt-1 max-w-40 text-sm text-[#6A6A6C]">
-                    {dayjs(item.release_date).format("MMM DD, YYYY") || "-"}
-                  </p>
+                  {type !== "people" && (
+                    <p className="mt-1 max-w-40 text-sm text-[#6A6A6C]">
+                      {movieTvItems.release_date
+                        ? dayjs(movieTvItems.release_date).format(
+                            "MMM DD, YYYY"
+                          )
+                        : movieTvItems.first_air_date
+                        ? dayjs(movieTvItems.first_air_date).format(
+                            "MMM DD, YYYY"
+                          )
+                        : ""}
+                    </p>
+                  )}
+
+                  {type === "people" && (
+                    <p className="mt-1 max-w-40 text-sm text-[#6A6A6C]">
+                      {personItem.known_for
+                        .slice(0, 4)
+                        .map(
+                          (knownItem) =>
+                            knownItem.original_name || knownItem.original_title
+                        )
+                        .join(", ")}
+                    </p>
+                  )}
                 </div>
               );
             })}
           </div>
 
-          <PaginationCards currentPage={currentPage} type={type} />
+          <PaginationCards currentPage={currentPage} type={urlType} />
         </>
       ) : (
         <>Failed</>

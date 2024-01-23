@@ -49,7 +49,8 @@ const OnTheAirTvShows = () => {
       <CardsView
         data={OnTheAirData}
         currentPage={page ? parseInt(page) : 1}
-        type="tv/on_the_air"
+        type="tv"
+        urlType="tv/on_the_air"
       />
     </div>
   );

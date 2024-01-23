@@ -17,7 +17,8 @@ import MovieCard from "./Movie-Card";
 interface MovieCardWrapperProps {
   initialData: CardData;
   filterBy: boolean;
-  title: string;
+  sectionTitle: string;
+  title: "movie" | "people" | "tv";
 }
 
 let trendingPage = 1;
@@ -84,6 +85,7 @@ const MovieCardWrapper = ({
   initialData,
   filterBy,
   title,
+  sectionTitle,
 }: MovieCardWrapperProps) => {
   const [data, setData] = useState<CardData>(initialData);
 
@@ -92,12 +94,13 @@ const MovieCardWrapper = ({
       {data ? (
         <>
           <div className="flex justify-between items-center space-x-4">
-            <h2 className="font-bold text-2xl">{title}</h2>
+            <h2 className="font-bold text-2xl">{sectionTitle}</h2>
             <div className="flex items-center space-x-3">
               {filterBy && <FilterMenu setData={setData} />}
             </div>
           </div>
-          <MovieCard data={data} title={title.toLowerCase()} />
+
+          <MovieCard data={data} type={title} />
         </>
       ) : null}
     </>

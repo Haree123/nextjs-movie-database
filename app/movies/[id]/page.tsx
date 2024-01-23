@@ -1,21 +1,25 @@
 import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   getInfoByIdCredits,
   getInfoByIdVideos,
-  getSimilarByMovieId,
+  getReviewsById,
+  getSimilarById,
 } from "@/services/home.apis";
 import {
   MovieCrew,
   MovieCredits,
   CardData,
   MovieVideos,
+  MovieReviews,
 } from "@/typings/typings";
 import { Skeleton } from "@/components/ui/skeleton";
 import CastCardsView from "@/components/Cast-Card-View";
 import MovieCard from "@/components/Movie-Card";
+import ReviewCards from "@/components/Review-Cards";
 
 const VideoDialog = dynamic(() => import("@/components/Video-Dialog"), {
   ssr: false,
@@ -37,7 +41,12 @@ const MoviesById = async ({
     params.id
   );
   const dataVideos: MovieVideos = await getInfoByIdVideos("movie", params.id);
-  const similarMovies: CardData = await getSimilarByMovieId("movie", params.id);
+  const similarMovies: CardData = await getSimilarById("movie", params.id);
+  const movieReviews: MovieReviews = await getReviewsById(
+    "movie",
+    params.id,
+    1
+  );
   const crewFilter = ["Director", "Producer", "Screenplay"];
 
   const convertMinutesToHoursAndMinutes = (minutes: number) => {
@@ -79,7 +88,7 @@ const MoviesById = async ({
   )[0];
 
   return dataCredits ? (
-    <div>
+    <>
       <div className="relative h-[550px]">
         <div className="absolute inset-0">
           <Image
@@ -134,7 +143,7 @@ const MoviesById = async ({
                 </b>
               </p>
 
-              <VideoDialog url={videoUrl.key} />
+              {videoUrl?.key && <VideoDialog url={videoUrl?.key} />}
             </div>
             <p className="italic text-gray-400 my-3">{dataCredits.tagline}</p>
 
@@ -186,7 +195,7 @@ const MoviesById = async ({
             </b>
           </p>
 
-          <VideoDialog url={videoUrl.key} />
+          {videoUrl?.key && <VideoDialog url={videoUrl?.key} />}
         </div>
         <p className="italic text-gray-400 my-3">{dataCredits.tagline}</p>
 
@@ -219,6 +228,26 @@ const MoviesById = async ({
         </div>
       )}
 
+      {movieReviews.results.length > 0 && (
+        <div className="m-4 md:m-10">
+          <h2 className="font-bold text-xl mb-5">Reviews</h2>
+
+          <div className="grid grid-cols-2 gap-x-5">
+            {movieReviews.results.slice(0, 2).map((reviews) => (
+              <div key={reviews.id}>
+                <ReviewCards review={reviews} />
+              </div>
+            ))}
+          </div>
+
+          <Link href={`/movies/${params.id}/reviews`}>
+            <div className="cursor-pointer my-4 hover:font-bold w-fit">
+              <p>Read Full Reviews</p>
+            </div>
+          </Link>
+        </div>
+      )}
+
       {dataVideos.videos.results.length > 0 && (
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Videos</h2>
@@ -243,10 +272,14 @@ const MoviesById = async ({
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Similar Movies</h2>
 
-          <MovieCard data={similarMovies} title={"upcoming movie"} />
+          <MovieCard
+            data={similarMovies}
+            type="movie"
+            urlType="movie/similar"
+          />
         </div>
       )}
-    </div>
+    </>
   ) : (
     <MoviesByIdSkeleton />
   );
