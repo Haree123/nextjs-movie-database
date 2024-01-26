@@ -1,6 +1,8 @@
 type MediaType = "movie" | "tv";
-type MoviesType = "now_playing" | "popular" | "top_rated";
-type TvShowsType = "on_the_air" | "popular" | "top_rated";
+export type QueryType = MediaType | "person";
+type CommonSubjects = "popular" | "top_rated";
+type MoviesType = "now_playing" | CommonSubjects;
+type TvShowsType = "on_the_air" | CommonSubjects;
 type TimeFrame = "day" | "week";
 
 export const getTrending = async (page: number, timeFrame: TimeFrame) => {
@@ -124,5 +126,23 @@ export const getPeopleInfoById = async (id: string) => {
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/person/${id}?${queryParams}`
   );
+  return data.json();
+};
+
+export const getSearchInfoByQuery = async (
+  type: QueryType,
+  page: string,
+  query: string
+) => {
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    page: page,
+    query,
+  });
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/search/${type}?${queryParams}`
+  );
+
   return data.json();
 };

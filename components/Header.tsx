@@ -1,10 +1,11 @@
 import Link from "next/link";
+
 import HeaderNavigationMenu from "./Header-Menu";
 
 const Header = () => {
   return (
     <header>
-      <div className="flex items-center justify-between h-12 mx-3 lg:mx-24">
+      <div className="flex items-center justify-between h-12 mx-3 lg:mx-24 select-none">
         <div className="flex items-center space-x-1.5">
           <Link
             href="/"
@@ -14,7 +15,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex items-center space-x-4 ml-5 text-sm">
+        <div className="hidden md:flex items-center space-x-4 ml-5 text-sm">
           <HeaderNavigationMenu />
         </div>
       </div>

@@ -1,15 +1,15 @@
 import dayjs from "dayjs";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { Skeleton } from "./ui/skeleton";
 import {
   CardData,
   CardResults,
   PeopleData,
   PeopleResults,
 } from "@/typings/typings";
+import { Skeleton } from "./ui/skeleton";
 import { PaginationCards } from "./Pagination";
-import { useRouter } from "next/navigation";
 
 type TypeBasedData<T extends string> = T extends "movies"
   ? CardData
@@ -52,14 +52,14 @@ const CardsView = ({
         </div>
       ) : data.results ? (
         <>
-          <div className="grid grid-cols-4 lg:grid-cols-5 gap-10 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-10">
             {data.results.map((item) => {
               const movieTvItems = item as CardResults;
               const personItem = item as PeopleResults;
 
               return (
                 <div
-                  className="cursor-pointer"
+                  className="cursor-pointer min-h-fit h-full"
                   key={item.id}
                   onClick={() => {
                     router.push(
@@ -74,21 +74,18 @@ const CardsView = ({
                   }}
                 >
                   <Image
-                    placeholder="blur"
-                    blurDataURL={
-                      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/wcAAwAB/8AIPAAAAABJRU5ErkJggg=="
-                    }
                     style={{ borderRadius: "0.5rem" }}
-                    className="object-contain h-84 w-full"
+                    className="object-contain h-[80%] w-full"
                     src={`${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${
                       type === "people"
                         ? personItem.profile_path
                         : movieTvItems.poster_path
                     }`}
                     alt={item.name || movieTvItems.title || "-"}
-                    height={100}
+                    height={0}
+                    width={0}
                     quality={100}
-                    width={150}
+                    sizes="100vw"
                   />
 
                   <p className="break-words font-bold mt-3 max-w-40 text-sm">

@@ -1,3 +1,9 @@
+export interface ErrorData {
+  success: boolean;
+  status_code: number;
+  status_message: string;
+}
+
 export interface CardResults {
   first_air_date: string;
   id: number;
@@ -5,6 +11,7 @@ export interface CardResults {
   name: string;
   original_name: string;
   original_title: string;
+  overview: string;
   poster_path: string;
   release_date: string;
   title: string;
@@ -15,6 +22,7 @@ export interface CardData {
   page: number;
   results: CardResults[];
   total_pages: number;
+  total_results: number;
 }
 
 export interface CommonMediaData {
@@ -90,7 +98,7 @@ export interface MovieReviewResult {
   url: string;
 }
 
-interface MovieData extends CommonMediaData {
+interface MovieData extends CommonMediaData, ErrorData {
   original_title: string;
   release_date: string;
   runtime: number;
@@ -158,7 +166,7 @@ export interface TvSeason {
   vote_average: number;
 }
 
-export interface TvData extends CommonMediaData {
+export interface TvData extends CommonMediaData, ErrorData {
   adult: boolean;
   credits: {
     cast: TvCastData[];
@@ -212,11 +220,13 @@ interface PeopleKnownForResults {
 }
 
 export interface PeopleResults {
-  profile_path: string;
   adult: boolean;
   id: number;
   known_for: PeopleKnownForResults[];
+  known_for_department: string;
   name: string;
+  original_name: string;
+  profile_path: string;
   popularity: number;
 }
 
@@ -224,6 +234,7 @@ export interface PeopleData {
   page: number;
   results: PeopleResults[];
   total_pages: number;
+  total_results: number;
 }
 
 interface CommonPersonCredits {
@@ -259,7 +270,7 @@ export interface PersonCrew extends CommonPersonCredits {
   media_type: string;
 }
 
-export interface PersonData {
+export interface PersonData extends ErrorData {
   adult: boolean;
   also_known_as: string[];
   biography: string;

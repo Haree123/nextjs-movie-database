@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { notFound } from "next/navigation";
+import { Star } from "lucide-react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -11,7 +13,6 @@ import {
 import { CardData, TvCredits, TvCrewData, TvVideos } from "@/typings/typings";
 import MovieCard from "@/components/Movie-Card";
 import CastCardsView from "@/components/Cast-Card-View";
-import { Star } from "lucide-react";
 
 const VideoDialog = dynamic(() => import("@/components/Video-Dialog"), {
   ssr: false,
@@ -61,6 +62,10 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
     item.name.includes("Official Trailer")
   )[0];
 
+  if (dataCredits.status_code === 34) {
+    return notFound();
+  }
+
   return dataCredits ? (
     <>
       <div className="relative h-[550px]">
@@ -98,7 +103,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
             </p>
 
             <div className="flex space-x-3 my-2">
-              <p>{dataCredits.genres.map((item) => item.name).join(", ")}</p>
+              <p>{dataCredits.genres?.map((item) => item.name).join(", ")}</p>
             </div>
 
             <div className="flex items-center space-x-3">
@@ -146,7 +151,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
         </p>
 
         <div className="flex space-x-3 my-2">
-          <p>{dataCredits.genres.map((item) => item.name).join(", ")}</p>
+          <p>{dataCredits.genres?.map((item) => item.name).join(", ")}</p>
         </div>
 
         <div className="flex items-center space-x-3">
@@ -191,7 +196,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
       <div className="m-4 md:m-10">
         <h2 className="font-bold text-2xl mb-5">Seasons</h2>
 
-        {dataCredits.seasons.map((seasonsItem) => (
+        {dataCredits.seasons?.map((seasonsItem) => (
           <div key={seasonsItem.id} className="my-4">
             <p>
               <span className="font-semibold text-sm">Season Name</span> -{" "}
@@ -232,13 +237,13 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
         ))}
       </div>
 
-      {dataCredits.credits.cast.length > 0 && (
+      {dataCredits.credits?.cast.length > 0 && (
         <div className="m-4 md:m-10">
           <CastCardsView data={dataCredits} movieId={params.id} type="tv" />
         </div>
       )}
 
-      {dataVideos.videos.results.length > 0 && (
+      {dataVideos.videos?.results.length > 0 && (
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Videos</h2>
 
@@ -259,7 +264,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
         </div>
       )}
 
-      {similarMovies.results.length > 0 && (
+      {similarMovies.results?.length > 0 && (
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Similar Movies</h2>
 

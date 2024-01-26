@@ -7,12 +7,25 @@ import {
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
 import { useRouter } from "next/navigation";
+import { SearchIcon, X } from "lucide-react";
+
+import { useStore } from "@/store/store";
 
 const HeaderNavigationMenu = () => {
   const router = useRouter();
+  const { isSearchOpen, handleSearch } = useStore();
 
   return (
     <>
+      <button
+        className="transition ease-in-out duration-1000 transform hover:scale-110"
+        onClick={() => {
+          handleSearch();
+        }}
+      >
+        {!isSearchOpen ? <SearchIcon size={20} /> : <X size={20} />}
+      </button>
+      
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
