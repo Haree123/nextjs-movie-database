@@ -2,6 +2,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { Star } from "lucide-react";
+import { notFound } from "next/navigation";
 
 import { getPeopleInfoById } from "@/services/home.apis";
 import { PersonData } from "@/typings/typings";
@@ -16,9 +17,13 @@ interface PersonByIdProps {
 const PersonById = async ({ params }: PersonByIdProps) => {
   const personData: PersonData = await getPeopleInfoById(params.id);
 
-  const sortedKnownFor = personData.combined_credits.cast
+  const sortedKnownFor = personData.combined_credits?.cast
     .sort((a, b) => b.vote_average - a.vote_average)
     .slice(0, 4);
+
+  if (personData.status_code === 34) {
+    return notFound();
+  }
 
   return (
     <div className="my-5 px-10 lg:w-3/4 lg:mx-auto">
@@ -116,10 +121,10 @@ const PersonById = async ({ params }: PersonByIdProps) => {
         <h2 className="font-bold text-xl">Known For</h2>
 
         <div className="grid grid-cols-2 gap-8 my-3">
-          {sortedKnownFor.map((sortedItem) => (
+          {sortedKnownFor?.map((sortedItem) => (
             <div
               key={sortedItem.id}
-              className="flex items-center space-x-5 h-32 w-full"
+              className="flex items-center space-x-5 h-[141px] w-full"
             >
               <Link
                 className="flex items-center space-x-5 md:w-[60%]"
@@ -127,9 +132,10 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                   sortedItem.media_type === "movie" ? "movies" : "tv"
                 }/${sortedItem.id}`}
               >
-                <div className="h-full min-w-20 max-w-20 md:min-w-0 md:w-20">
+                <div className="h-full min-w-[94px] w-[94px]">
                   <Image
                     className="h-full w-full object-cover"
+                    style={{ borderRadius: "5px" }}
                     src={
                       sortedItem.poster_path
                         ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${sortedItem.poster_path}`
@@ -156,7 +162,7 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                     <p>{sortedItem.vote_average.toFixed(2)}</p>
                   </div>
 
-                  <p className="mt-1 text-sm text-gray-400">
+                  <p className="line-clamp-2 mt-1 text-sm text-gray-400">
                     {sortedItem.character}
                   </p>
 
@@ -186,9 +192,9 @@ const PersonById = async ({ params }: PersonByIdProps) => {
             <h2 className="font-semibold my-5 text-lg">Cast</h2>
 
             <div className="flex flex-col space-y-4">
-              {personData.combined_credits.cast.map((castItem) => (
+              {personData.combined_credits?.cast.map((castItem) => (
                 <div key={castItem.id}>
-                  <div className="flex items-center space-x-5 h-32 w-full">
+                  <div className="flex items-center space-x-5 h-[141px] w-full">
                     <Link
                       className="flex items-center space-x-5 md:w-[60%]"
                       key={castItem.id}
@@ -196,9 +202,10 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                         castItem.media_type === "movie" ? "movies" : "tv"
                       }/${castItem.id}`}
                     >
-                      <div className="h-full min-w-20 max-w-20 md:min-w-0 md:w-20">
+                      <div className="h-full min-w-[94px] w-[94px]">
                         <Image
                           className="h-full w-full object-cover"
+                          style={{ borderRadius: "5px" }}
                           src={
                             castItem.poster_path
                               ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${castItem.poster_path}`
@@ -225,7 +232,7 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                           <p>{castItem.vote_average.toFixed(2)}</p>
                         </div>
 
-                        <p className="mt-1 text-sm text-gray-400">
+                        <p className="line-clamp-2 mt-1 text-sm text-gray-400">
                           {castItem.character}
                         </p>
 
@@ -256,10 +263,10 @@ const PersonById = async ({ params }: PersonByIdProps) => {
             <h2 className="font-semibold my-5 text-lg">Crew</h2>
 
             <div className="flex flex-col space-y-4">
-              {personData.combined_credits.crew.length > 0 ? (
-                personData.combined_credits.crew.map((crewItem) => (
+              {personData.combined_credits?.crew.length > 0 ? (
+                personData.combined_credits?.crew.map((crewItem) => (
                   <div key={crewItem.id}>
-                    <div className="flex items-center space-x-5 h-32 w-full">
+                    <div className="flex items-center space-x-5 h-[141px] w-full">
                       <Link
                         className="flex items-center space-x-5 md:w-[60%]"
                         key={crewItem.id}
@@ -267,20 +274,21 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                           crewItem.media_type === "movie" ? "movies" : "tv"
                         }/${crewItem.id}`}
                       >
-                        <div className="h-full min-w-20 max-w-20 md:min-w-0 md:w-20">
-                          <Image
-                            className="h-full w-full object-cover"
-                            src={
-                              crewItem.poster_path
-                                ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${crewItem.poster_path}`
-                                : "https://banner2.cleanpng.com/20180628/jvc/kisspng-clapperboard-computer-icons-film-download-movie-poster-5b359e7b2db090.7720687515302406351872.jpg"
-                            }
-                            height={0}
-                            width={0}
-                            sizes="100vw"
-                            alt={crewItem.title || crewItem.original_title}
-                          />
-                        </div>
+                        <div className="h-full min-w-[94px] w-[94px]">
+                        <Image
+                          className="h-full w-full object-cover"
+                          style={{ borderRadius: "5px" }}
+                          src={
+                            crewItem.poster_path
+                              ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${crewItem.poster_path}`
+                              : "https://banner2.cleanpng.com/20180628/jvc/kisspng-clapperboard-computer-icons-film-download-movie-poster-5b359e7b2db090.7720687515302406351872.jpg"
+                          }
+                          height={0}
+                          width={0}
+                          sizes="100vw"
+                          alt={crewItem.title || crewItem.original_title}
+                        />
+                      </div>
 
                         <div>
                           <p className="font-bold text-sm">

@@ -9,6 +9,7 @@ const initialData = {
   page: 0,
   results: [],
   total_pages: 0,
+  total_results: 0,
 };
 
 const PopularPeople = () => {
@@ -26,7 +27,7 @@ const PopularPeople = () => {
   }, []);
 
   return (
-    <div className="mx-3 md:mx-40 lg:mx-72 my-10">
+    <div className="mx-[2%] md:mx-[10%] lg:mx-[15%] my-10">
       <h2 className="font-bold text-xl mb-10">Popular People</h2>
 
       <CardsView

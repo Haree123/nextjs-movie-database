@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import {
   getInfoByIdCredits,
@@ -86,6 +87,10 @@ const MoviesById = async ({
   const videoUrl = dataVideos.videos?.results.filter((item) =>
     item.name.includes("Official Trailer")
   )[0];
+
+  if (dataCredits.status_code === 34) {
+    return notFound();
+  }
 
   return dataCredits ? (
     <>

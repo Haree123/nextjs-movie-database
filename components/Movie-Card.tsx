@@ -1,3 +1,4 @@
+"use client";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,6 +31,7 @@ const MovieCard = ({
         ).map((item) => {
           return (
             <Link
+              className="min-h-fit h-full"
               key={item.id}
               href={`/${
                 item.media_type === undefined
@@ -39,10 +41,10 @@ const MovieCard = ({
                   : "tv"
               }/${item.id}`}
             >
-              <div className="cursor-pointer relative overflow-visible h-[380px]">
+              <div className="cursor-pointer relative overflow-visible">
                 <Image
                   style={{ borderRadius: "0.375rem" }}
-                  className="h-3/4 w-full"
+                  className="h-[80%] w-full"
                   src={
                     item.poster_path
                       ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}${item.poster_path}`

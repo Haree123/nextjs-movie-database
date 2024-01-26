@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -29,13 +30,13 @@ const CastCardsView = ({
         {data.credits.cast.slice(0, 15).map((item) => {
           return (
             <div
-              className="cursor-pointer relative overflow-visible py-2 w-40"
+              className="cursor-pointer min-h-fit h-full relative overflow-visible py-2 w-40"
               key={item.id}
             >
               <Image
-                sizes="100"
+                sizes="100vw"
                 style={{ borderRadius: "0.375rem" }}
-                className="h-[80%] w-full"
+                className="h-[80%] w-full object-cover"
                 src={
                   item.profile_path
                     ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}${item.profile_path}`
@@ -51,7 +52,7 @@ const CastCardsView = ({
                 {item.name}
               </p>
 
-              <p className="break-words mt-1 text-gray-400 text-xs">
+              <p className="break-words line-clamp-3 mt-1 text-gray-400 text-xs">
                 {item.character}
               </p>
             </div>

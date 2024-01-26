@@ -12,10 +12,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationCardsProps {
   currentPage: number;
+  query?: string;
   type: string;
 }
 
-export function PaginationCards({ currentPage, type }: PaginationCardsProps) {
+export function PaginationCards({
+  currentPage,
+  query,
+  type,
+}: PaginationCardsProps) {
   const startPage = Math.max(1, currentPage - 1);
   const endPage = Math.max(3, currentPage + 1);
 
@@ -26,7 +31,11 @@ export function PaginationCards({ currentPage, type }: PaginationCardsProps) {
       pageNumbers.push(
         <PaginationItem key={i} className={currentPage === i ? "active" : ""}>
           <PaginationLink
-            href={`/${type}?page=${currentPage + 1}`}
+            href={`/${type}?${
+              query
+                ? `page=${currentPage + 1}&query=${query}`
+                : `page=${currentPage + 1}`
+            }`}
             isActive={i === currentPage}
           >
             {i}

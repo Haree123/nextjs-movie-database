@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { CardData } from "@/typings/typings";
 import { getTrending, getUpcoming } from "@/services/home.apis";
 import MovieCardWrapper from "@/components/MovieCardWrapper";
 import Oppenheimer from "../public/assets/Oppenheimer.jpg";
+
 
 let page = 1;
 
@@ -14,7 +15,7 @@ const Home = async () => {
   const upcomingMovie: CardData = await getUpcoming(page, "movie");
 
   return (
-    <main>
+    <main className="30 select-none">
       <div className="relative">
         <Image
           src={Oppenheimer}
@@ -26,10 +27,12 @@ const Home = async () => {
           <p className="mt-1 text-lg">
             Millions of movies, Tv Shows and people to discover. Explore now.
           </p>
-          <Button className="bg-blue-200 dark:bg-white rounded-sm flex justify-between mt-5 px-5 py-6 w-fit text-black">
-            <span className="font-semibold text-base">Try It!</span>
-            <ArrowRight className="ml-10" size={20} />
-          </Button>
+          <Link href="/movies/popular?page=1">
+            <div className="bg-blue-200 dark:bg-white rounded-sm flex justify-between mt-5 px-5 py-3 w-fit text-black">
+              <span className="font-semibold text-base">Try It!</span>
+              <ArrowRight className="ml-10" size={20} />
+            </div>
+          </Link>
         </div>
       </div>
 
