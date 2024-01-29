@@ -1,4 +1,7 @@
-type MediaType = "movie" | "tv";
+import { InitialStateInterface } from "@/components/filters/filterReducer";
+import dayjs from "dayjs";
+
+export type MediaType = "movie" | "tv";
 export type QueryType = MediaType | "person";
 type CommonSubjects = "popular" | "top_rated";
 type MoviesType = "now_playing" | CommonSubjects;
@@ -49,6 +52,51 @@ export const getTvShows = async (page: number, type: TvShowsType) => {
 
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/tv/${type}?${queryParams}`
+  );
+  return data.json();
+};
+
+export const discoverMedia = async (
+  page: number,
+  state: InitialStateInterface,
+  type: MediaType
+) => {
+  const { fromDate, genres, language, toDate } = state;
+
+  const queryParams = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY as string,
+    page: String(page),
+    with_genres:
+      genres !== undefined && genres.length > 0 ? genres.join(",") : "",
+    with_original_language: language ? language : "",
+  });
+
+  if (type === "movie") {
+    queryParams.append(
+      "primary_release_date.gte",
+      String(fromDate) ? dayjs(String(fromDate)).format("YYYY-MM-DD") : ""
+    );
+
+    queryParams.append(
+      "primary_release_date.lte",
+      String(toDate) ? dayjs(String(toDate)).format("YYYY-MM-DD") : ""
+    );
+  }
+
+  if (type === "tv") {
+    queryParams.append(
+      "first_air_date.gte",
+      String(fromDate) ? dayjs(String(fromDate)).format("YYYY-MM-DD") : ""
+    );
+
+    queryParams.append(
+      "first_air_date.lte",
+      String(toDate) ? dayjs(String(toDate)).format("YYYY-MM-DD") : ""
+    );
+  }
+
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/discover/${type}?${queryParams}`
   );
   return data.json();
 };
