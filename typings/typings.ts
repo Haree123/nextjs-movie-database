@@ -1,3 +1,8 @@
+export interface genresList {
+  id: number;
+  name: string;
+}
+
 export interface ErrorData {
   success: boolean;
   status_code: number;

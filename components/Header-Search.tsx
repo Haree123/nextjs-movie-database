@@ -67,8 +67,10 @@ const HeaderSearch = () => {
   };
 
   useEffect(() => {
-    getTrendingData();
-  }, []);
+    if (isSearchOpen) {
+      getTrendingData();
+    }
+  }, [isSearchOpen]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
