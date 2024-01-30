@@ -96,7 +96,7 @@ const MoviesByIdCast = async ({ params }: MoviesByIdCastProps) => {
 
           <div className="flex flex-col space-y-4 my-3">
             {dataCredits.credits.crew.map((item) => (
-              <div className="flex space-x-4 h-14">
+              <div key={item.id} className="flex space-x-4 h-14">
                 <Image
                   className="h-full w-12 object-contain"
                   sizes="100vw"

@@ -28,6 +28,9 @@ const initialDataCredits = {
   runtime: 0,
   tagline: "",
   title: "",
+  success: false,
+  status_code: 0,
+  status_message: "",
   vote_average: 0,
 };
 

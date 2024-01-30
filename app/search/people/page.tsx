@@ -136,9 +136,8 @@ const SearchQueryByPeople = () => {
               <div className="flex flex-col m-4 space-y-5 min-h-[94px] md:m-0 md:w-3/5">
                 {searchData.results.map((searchItem) => {
                   return (
-                    <Link href={`/people/${searchItem.id}`}>
+                    <Link key={searchItem.id} href={`/people/${searchItem.id}`}>
                       <div
-                        key={searchItem.id}
                         className="border-2 flex space-x-5"
                         style={{ borderRadius: "5px" }}
                       >

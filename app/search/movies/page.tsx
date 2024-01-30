@@ -135,7 +135,7 @@ const SearchQueryByMovie = () => {
               <div className="flex flex-col m-4 space-y-5 min-h-[94px] md:m-0 md:w-3/5">
                 {searchData.results.map((searchItem) => {
                   return (
-                    <Link href={`/movies/${searchItem.id}`}>
+                    <Link key={searchItem.id} href={`/movies/${searchItem.id}`}>
                       <div
                         key={searchItem.id}
                         className="border-2 flex space-x-5"

@@ -295,3 +295,9 @@ export interface PersonData extends ErrorData {
   popularity: number;
   profile_path: string;
 }
+
+export interface LanguageList {
+  id: number;
+  iso: string;
+  language: string;
+}

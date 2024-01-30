@@ -15,7 +15,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-4 ml-5 text-sm">
+        <div className="flex items-center space-x-4 ml-5 text-sm">
           <HeaderNavigationMenu />
         </div>
       </div>

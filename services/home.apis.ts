@@ -15,7 +15,12 @@ export const getTrending = async (page: number, timeFrame: TimeFrame) => {
   });
 
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/trending/all/${timeFrame}?${queryParams}`
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/trending/all/${timeFrame}?${queryParams}`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   return data.json();
 };
@@ -27,7 +32,12 @@ export const getUpcoming = async (page: number, type: MediaType) => {
   });
 
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/${type}/upcoming?${queryParams}`
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/${type}/upcoming?${queryParams}`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   return data.json();
 };
@@ -39,7 +49,12 @@ export const getMovies = async (page: number, type: MoviesType) => {
   });
 
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/movie/${type}?${queryParams}`
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/movie/${type}?${queryParams}`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   return data.json();
 };
@@ -51,7 +66,12 @@ export const getTvShows = async (page: number, type: TvShowsType) => {
   });
 
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/tv/${type}?${queryParams}`
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/tv/${type}?${queryParams}`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   return data.json();
 };
@@ -96,7 +116,12 @@ export const discoverMedia = async (
   }
 
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/discover/${type}?${queryParams}`
+    `${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/discover/${type}?${queryParams}`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   return data.json();
 };
