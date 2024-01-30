@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -7,6 +9,10 @@ import { getTrending, getUpcoming } from "@/services/home.apis";
 import MovieCardWrapper from "@/components/MovieCardWrapper";
 import Oppenheimer from "../public/assets/Oppenheimer.jpg";
 
+export const metadata: Metadata = {
+  title: "Film Box",
+  description: "Created By Haree Prasad",
+};
 
 let page = 1;
 

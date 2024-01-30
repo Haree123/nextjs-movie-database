@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { CardData } from "@/typings/typings";
 import { useStore } from "@/store/store";
-import { QueryType, getTrending } from "@/services/home.apis";
+import { getTrending } from "@/services/home.apis";
 
 let initialTrending = {
   page: 0,
@@ -23,7 +23,6 @@ const HeaderSearch = () => {
   const mediaTypes = ["Movies", "Tv Shows", "People"] as const;
   type MediaTypes = (typeof mediaTypes)[number];
 
-  const [queryType, setQueryType] = useState<QueryType | null>(null);
   const [trendingData, setTrendingData] = useState<CardData>(initialTrending);
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -112,9 +111,10 @@ const HeaderSearch = () => {
 
         {inputValue.length < 3 && (
           <div>
-            {trendingData?.results.slice(0, 10).map((item, index) => {
+            {trendingData?.results.slice(0, 10).map((item) => {
               return (
                 <Link
+                  key={item.id}
                   href={`/${item.media_type === "movie" ? "movies" : "tv"}/${
                     item.id
                   }`}
@@ -143,6 +143,7 @@ const HeaderSearch = () => {
             {mediaTypes.map((inputItem) => {
               return (
                 <Link
+                  key={inputItem}
                   href={`/search/${
                     inputItem === "Movies"
                       ? "movies"
