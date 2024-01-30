@@ -19,6 +19,8 @@ const Header = () => {
           <HeaderNavigationMenu />
         </div>
       </div>
+
+      <hr />
     </header>
   );
 };

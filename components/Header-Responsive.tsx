@@ -13,7 +13,7 @@ interface MenuType {
 }
 
 const HeaderResponsive = () => {
-  const { isResponsiveMenu } = useStore();
+  const { isResponsiveMenu, handleResponsiveMenu } = useStore();
 
   const [isMenuOpen, setIsMenuOpen] = useState<MenuType>({
     movies: false,
@@ -96,17 +96,23 @@ const HeaderResponsive = () => {
 
         {isTrue && isMenuOpen.movies && (
           <div className="my-2 w-full">
-            <Link href="/movies/now_playing?page=1">
+            <Link
+              href="/movies/now_playing?page=1"
+              onClick={handleResponsiveMenu}
+            >
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Now Playing
               </p>
             </Link>
-            <Link href="/movies/popular?page=1">
+            <Link href="/movies/popular?page=1" onClick={handleResponsiveMenu}>
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Popular
               </p>
             </Link>
-            <Link href="/movies/top_rated?page=1">
+            <Link
+              href="/movies/top_rated?page=1"
+              onClick={handleResponsiveMenu}
+            >
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Top Rated
               </p>
@@ -116,7 +122,7 @@ const HeaderResponsive = () => {
 
         {isTrue && isMenuOpen.people && (
           <div className="my-2">
-            <Link href="/people/popular?page=1">
+            <Link href="/people/popular?page=1" onClick={handleResponsiveMenu}>
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Popular
               </p>
@@ -126,17 +132,17 @@ const HeaderResponsive = () => {
 
         {isTrue && isMenuOpen.tv && (
           <div className="my-2 w-full">
-            <Link href="/tv/on_the_air?page=1">
+            <Link href="/tv/on_the_air?page=1" onClick={handleResponsiveMenu}>
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 On the Air
               </p>
             </Link>
-            <Link href="/tv/popular?page=1">
+            <Link href="/tv/popular?page=1" onClick={handleResponsiveMenu}>
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Popular
               </p>
             </Link>
-            <Link href="/tv/top_rated?page=1">
+            <Link href="/tv/top_rated?page=1" onClick={handleResponsiveMenu}>
               <p className="cursor-pointer p-4 hover:bg-gray-800 text-sm">
                 Top Rated
               </p>

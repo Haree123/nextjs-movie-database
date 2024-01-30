@@ -30,8 +30,8 @@ const ReviewCards = ({ review }: ReviewCardsProps) => {
         </div>
 
         <div className="flex flex-col space-y-1">
-          <p className="text-xl">
-            <b>A Review by {review.author_details.name}</b>
+          <p className="md:text-xl min-h-fit">
+            <b>{review.author_details.name}</b>
           </p>
 
           <p className="text-sm text-gray-400">

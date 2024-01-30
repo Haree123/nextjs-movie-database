@@ -82,10 +82,10 @@ const CardsView = ({
                         : movieTvItems.poster_path
                     }`}
                     alt={item.name || movieTvItems.title || "-"}
-                    height={0}
-                    width={0}
+                    height={100}
+                    width={100}
                     quality={100}
-                    sizes="100vw"
+                    priority
                   />
 
                   <p className="break-words font-bold mt-3 max-w-40 text-sm">

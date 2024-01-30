@@ -35,8 +35,8 @@ const PersonById = async ({ params }: PersonByIdProps) => {
           </p>
         </div>
 
-        <div className="flex space-x-10">
-          <div className="h-80 min-w-fit lg:w-60">
+        <div className="md:flex md:space-x-10">
+          <div className="border-2 border-white h-80 mx-auto w-56 md:min-w-fit lg:w-60">
             <Image
               className="h-full w-full object-cover"
               src={`${process.env.NEXT_PUBLIC_TMDB_IMG_NEW_URL}/${personData.profile_path}`}
@@ -47,7 +47,7 @@ const PersonById = async ({ params }: PersonByIdProps) => {
             />
           </div>
 
-          <div className="w-full">
+          <div className="my-5 md:my-0 w-full">
             <h2 className="font-bold text-xl">Personal Info</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-3">
@@ -275,20 +275,20 @@ const PersonById = async ({ params }: PersonByIdProps) => {
                         }/${crewItem.id}`}
                       >
                         <div className="h-full min-w-[94px] w-[94px]">
-                        <Image
-                          className="h-full w-full object-cover"
-                          style={{ borderRadius: "5px" }}
-                          src={
-                            crewItem.poster_path
-                              ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${crewItem.poster_path}`
-                              : "https://banner2.cleanpng.com/20180628/jvc/kisspng-clapperboard-computer-icons-film-download-movie-poster-5b359e7b2db090.7720687515302406351872.jpg"
-                          }
-                          height={0}
-                          width={0}
-                          sizes="100vw"
-                          alt={crewItem.title || crewItem.original_title}
-                        />
-                      </div>
+                          <Image
+                            className="h-full w-full object-cover"
+                            style={{ borderRadius: "5px" }}
+                            src={
+                              crewItem.poster_path
+                                ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}/${crewItem.poster_path}`
+                                : "https://banner2.cleanpng.com/20180628/jvc/kisspng-clapperboard-computer-icons-film-download-movie-poster-5b359e7b2db090.7720687515302406351872.jpg"
+                            }
+                            height={0}
+                            width={0}
+                            sizes="100vw"
+                            alt={crewItem.title || crewItem.original_title}
+                          />
+                        </div>
 
                         <div>
                           <p className="font-bold text-sm">

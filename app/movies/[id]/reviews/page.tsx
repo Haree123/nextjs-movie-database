@@ -86,14 +86,14 @@ const MovieByIdReviews = ({ params }: MovieByIdReviewsProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row my-10 space-x-10">
+      <div className="flex flex-col md:flex-row my-10 md:space-x-10">
         <div>
           <h2 className="text-2xl">
             <b>Reviews</b>
           </h2>
         </div>
 
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-6 my-4 md:my-0">
           {movieReviews?.results.map((item) => {
             return (
               <div

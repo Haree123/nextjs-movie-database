@@ -29,33 +29,32 @@ const CastCardsView = ({
       <div className="flex space-x-2 overflow-x-scroll scrollbar-hide">
         {data.credits.cast.slice(0, 15).map((item) => {
           return (
-            <div
-              className="cursor-pointer min-h-fit h-full relative overflow-visible py-2 w-40"
-              key={item.id}
-            >
-              <Image
-                sizes="100vw"
-                style={{ borderRadius: "0.375rem" }}
-                className="h-[80%] w-full object-cover"
-                src={
-                  item.profile_path
-                    ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}${item.profile_path}`
-                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                }
-                alt={item.name}
-                height={0}
-                width={0}
-                loading="lazy"
-              />
+            <Link key={item.id} href={`/people/${item.id}`}>
+              <div className="cursor-pointer min-h-fit h-full relative overflow-visible py-2 w-40">
+                <Image
+                  sizes="100vw"
+                  style={{ borderRadius: "0.375rem" }}
+                  className="h-[80%] w-full object-cover"
+                  src={
+                    item.profile_path
+                      ? `${process.env.NEXT_PUBLIC_TMDB_IMG_URL}${item.profile_path}`
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  }
+                  alt={item.name}
+                  height={0}
+                  width={0}
+                  loading="lazy"
+                />
 
-              <p className="break-words font-bold mt-3 w-40 text-sm">
-                {item.name}
-              </p>
+                <p className="break-words font-bold mt-3 w-40 text-sm">
+                  {item.name}
+                </p>
 
-              <p className="break-words line-clamp-3 mt-1 text-gray-400 text-xs">
-                {item.character}
-              </p>
-            </div>
+                <p className="break-words line-clamp-3 mt-1 text-gray-400 text-xs">
+                  {item.character}
+                </p>
+              </div>
+            </Link>
           );
         })}
 
