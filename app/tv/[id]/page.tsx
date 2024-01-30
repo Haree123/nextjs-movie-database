@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import { Star } from "lucide-react";
+import { notFound } from "next/navigation";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -122,7 +122,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
             </div>
             <p className="italic text-gray-400 my-3">{dataCredits.tagline}</p>
 
-            <b className="my-2">Overview</b>
+            {dataCredits.overview && <b className="my-2">Overview</b>}
             <p className="break-words ">{dataCredits.overview || "-"}</p>
 
             <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-9 gap-y-4 mt-5">

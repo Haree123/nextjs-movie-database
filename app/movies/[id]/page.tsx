@@ -237,7 +237,7 @@ const MoviesById = async ({
         <div className="m-4 md:m-10">
           <h2 className="font-bold text-xl mb-5">Reviews</h2>
 
-          <div className="grid grid-cols-2 gap-x-5">
+          <div className="grid grid-cols-1 gap-y-2 md:grid-cols-2 gap-x-5">
             {movieReviews.results.slice(0, 2).map((reviews) => (
               <div key={reviews.id}>
                 <ReviewCards review={reviews} />
