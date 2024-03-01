@@ -178,7 +178,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
         ) : null}
 
         <div className="grid grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 mt-5">
-          {getCrewDetails(dataCredits).map((item) => {
+          {getCrewDetails(dataCredits)?.map((item) => {
             return (
               <div className="flex flex-col" key={item.id}>
                 <p>
@@ -248,7 +248,7 @@ const TvShowsById = async ({ params }: TvShowsByIdProps) => {
           <h2 className="font-bold text-xl mb-5">Videos</h2>
 
           <div className="flex space-x-2 overflow-x-scroll scrollbar-hide">
-            {dataVideos.videos.results.map((vItem) => {
+            {dataVideos.videos.results?.map((vItem) => {
               if (vItem.key && vItem.site === "YouTube") {
                 return (
                   <div key={vItem.id} className="w-[450px]">
